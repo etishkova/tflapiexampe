@@ -1,4 +1,4 @@
-package com.etishkova.example.tfl.tflexample
+package com.etishkova.challenge.tfl.tflchallenge
 
 import org.junit.Test
 

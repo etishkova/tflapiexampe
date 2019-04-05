@@ -1,3 +1,10 @@
 <resources>
-    <string name="app_name">TFLExample</string>
+    <string name="app_name">TFL Road information</string>
+    <string name="nothing_found">No results</string>
+    <string name="error">Error</string>
+    <string name="search">Search</string>
+    <string name="road_name_prompt">Search</string>
+    <string name="display_name">Display name</string>
+    <string name="road_status">Road status</string>
+    <string name="road_status_description">Road status description</string>
 </resources>

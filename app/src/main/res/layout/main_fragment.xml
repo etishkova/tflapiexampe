@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/rlContainer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+    <android.widget.SearchView
+            android:id="@+id/svQuerySearchView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_toStartOf="@id/btnSearch"
+            android:layout_marginStart="@dimen/default_margin"
+            android:inputType="text"
+            android:hint="@string/road_name_prompt"
+            android:lines="1"/>
+
+    <Button
+            android:id="@+id/btnSearch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/search"
+            android:layout_alignParentEnd="true"/>
+
+    <TextView
+            android:id="@+id/tvDisplayName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/default_margin"
+            android:hint="@string/display_name"
+            android:layout_marginStart="@dimen/default_margin"
+            android:layout_below="@id/svQuerySearchView"
+            android:visibility="gone" />
+
+    <TextView
+            android:id="@+id/tvRoadStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/default_margin"
+            android:hint="@string/road_status"
+            android:layout_marginStart="@dimen/default_margin"
+            android:layout_below="@id/tvDisplayName"
+            android:visibility="gone" />
+
+    <TextView
+            android:id="@+id/tvRoadStatusDescription"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/default_margin"
+            android:hint="@string/road_status_description"
+            android:layout_marginStart="@dimen/default_margin"
+            android:layout_below="@id/tvRoadStatus"
+            android:visibility="gone" />
+
+    <ProgressBar
+            android:id="@+id/pbInProgress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:indeterminate="true"
+            android:visibility="gone"/>
+
+    <TextView
+            android:id="@+id/tvNoResults"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/default_margin"
+            android:text="@string/nothing_found"
+            android:gravity="center"
+            android:layout_below="@id/svQuerySearchView"
+            android:visibility="gone"/>
+
+    <TextView
+            android:id="@+id/tvError"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/default_margin"
+            android:text="@string/error"
+            android:gravity="center"
+            android:layout_below="@id/svQuerySearchView"
+            android:visibility="gone"/>
+</RelativeLayout>
