@@ -1,5 +1,6 @@
 package com.etishkova.challenge.tfl.tflchallenge.repository
 
+import com.etishkova.challenge.tfl.tflchallenge.BuildConfig
 import com.etishkova.challenge.tfl.tflchallenge.models.RoadStatus
 import io.reactivex.Observable
 import okhttp3.OkHttpClient
@@ -17,13 +18,14 @@ class RoadInfoService(
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .client(client)
         .addConverterFactory(GsonConverterFactory.create())
-        .build().create(RoadInfoServiceApi::class.java)
+        .build().create(RoadInfoServiceApi::class.java),
+    private val tflAppId: String = BuildConfig.TFL_APP_ID,
+    private val tflKey: String = BuildConfig.TFL_KEY
 ) {
     private lateinit var roadInfoServiceApi: RoadInfoServiceApi
 
-    //TODO:replace appId and appKey
     fun fetchRoadInfo(roadName: String): Observable<RoadStatus> {
-        return roadInfoServiceApi.fetchRoadInformation(roadName, "appId", "appKey")
+        return roadInfoServiceApi.fetchRoadInformation(roadName, tflAppId, tflKey)
     }
 
     companion object {

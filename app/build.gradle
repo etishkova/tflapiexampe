@@ -4,6 +4,8 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+apply from: 'credentials.gradle'
+
 android {
     compileSdkVersion 28
     defaultConfig {
@@ -18,6 +20,12 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "TFL_APP_ID", "\"" + "$TFL_APP_ID" + "\""
+            buildConfigField "String", "TFL_KEY", "\"" + "$TFL_KEY" + "\""
+        }
+        debug {
+            buildConfigField "String", "TFL_APP_ID", "\"" + "$TFL_APP_ID" + "\""
+            buildConfigField "String", "TFL_KEY", "\"" + "$TFL_KEY" + "\""
         }
     }
 }
