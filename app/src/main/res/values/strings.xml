@@ -7,4 +7,5 @@
     <string name="display_name">Display name</string>
     <string name="road_status">Road status</string>
     <string name="road_status_description">Road status description</string>
+    <string name="error_text">There was an error</string>
 </resources>

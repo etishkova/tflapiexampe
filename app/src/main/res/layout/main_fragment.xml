@@ -13,7 +13,6 @@
             android:layout_toStartOf="@id/btnSearch"
             android:layout_marginStart="@dimen/default_margin"
             android:inputType="text"
-            android:hint="@string/road_name_prompt"
             android:lines="1"/>
 
     <Button

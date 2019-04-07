@@ -1,7 +1,7 @@
 package com.etishkova.challenge.tfl.tflchallenge
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.widget.FrameLayout
 import butterknife.BindView
 import butterknife.ButterKnife
@@ -20,11 +20,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.main_activity)
         ButterKnife.setDebug(true)
         unbinder = ButterKnife.bind(this)
-        if (savedInstanceState == null) {
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.flContainer, MainFragment.newInstance())
-                .commitNow()
-        }
+
+        supportFragmentManager.beginTransaction()
+            .add(R.id.flContainer, MainFragment())
+            .commit()
     }
 
     override fun onDestroy() {

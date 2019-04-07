@@ -8,7 +8,16 @@ class Interactor {
     private val roadInfoService: RoadInfoService = RoadInfoService()
 
     fun searchRoadInfo(roadName: String): Observable<SearchRoadInfoState> {
-        //if (roadName.isEmpty())
+        if (roadName.isEmpty())
         return Observable.just(SearchRoadInfoState.SearchNotStartedYet())
+
+        return roadInfoService.fetchRoadInfo(roadName)
+            .map<SearchRoadInfoState> { roadInfoResult ->
+                if (roadInfoResult.httpStatusCode == 200) {
+                    SearchRoadInfoState.SearchResult(roadName, roadInfoResult)
+                } else SearchRoadInfoState.RequestError(roadName, roadInfoResult)
+            }
+            .startWith(SearchRoadInfoState.Loading())
+            .onErrorReturn { error -> SearchRoadInfoState.Error(roadName, error) }
     }
 }

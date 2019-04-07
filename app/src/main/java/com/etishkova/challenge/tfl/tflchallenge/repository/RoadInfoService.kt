@@ -18,14 +18,13 @@ class RoadInfoService(
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .client(client)
         .addConverterFactory(GsonConverterFactory.create())
-        .build().create(RoadInfoServiceApi::class.java),
-    private val tflAppId: String = BuildConfig.TFL_APP_ID,
-    private val tflKey: String = BuildConfig.TFL_KEY
+        .build().create(RoadInfoServiceApi::class.java)
 ) {
-    private lateinit var roadInfoServiceApi: RoadInfoServiceApi
+    private val tflAppId: String = BuildConfig.TFL_APP_ID
+    private val tflKey: String = BuildConfig.TFL_KEY
 
     fun fetchRoadInfo(roadName: String): Observable<RoadStatus> {
-        return roadInfoServiceApi.fetchRoadInformation(roadName, tflAppId, tflKey)
+        return api.fetchRoadInformation(roadName, tflAppId, tflKey)
     }
 
     companion object {
