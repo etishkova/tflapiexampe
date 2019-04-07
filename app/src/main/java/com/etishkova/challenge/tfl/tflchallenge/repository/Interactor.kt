@@ -9,7 +9,7 @@ class Interactor {
     private val roadInfoService: RoadInfoService = RoadInfoService()
 
     fun searchRoadInfo(roadName: String): Observable<SearchRoadInfoState> {
-        if (roadName.isEmpty())
+        if (roadName.isBlankOrEmpty())
             return Observable.just(SearchRoadInfoState.SearchNotStartedYet())
 
         return roadInfoService.fetchRoadInfo(roadName)
@@ -24,5 +24,9 @@ class Interactor {
                     SearchRoadInfoState.HttpError(roadName, error)
                 else SearchRoadInfoState.Error(error)
             }
+    }
+
+    private fun String.isBlankOrEmpty(): Boolean {
+        return this.isBlank() || this.isEmpty()
     }
 }

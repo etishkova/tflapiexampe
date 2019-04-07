@@ -57,9 +57,6 @@ class MainFragment : MviFragment<RoadInfoSearchView, RoadInfoSearchPresenter>(),
 
     private lateinit var unbinder: Unbinder
 
-    private val roadNameSubject: PublishSubject<String> = PublishSubject.create<String>()
-    val clickEvent: Observable<String> = roadNameSubject
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
