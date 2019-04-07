@@ -2,6 +2,7 @@ package com.etishkova.challenge.tfl.tflchallenge.repository
 
 import com.etishkova.challenge.tfl.tflchallenge.models.SearchRoadInfoState
 import io.reactivex.Observable
+import retrofit2.HttpException
 
 class Interactor {
 
@@ -14,12 +15,14 @@ class Interactor {
         return roadInfoService.fetchRoadInfo(roadName)
             .map<SearchRoadInfoState> { roadInfoResult ->
                 if (roadInfoResult.isEmpty()) {
-                    SearchRoadInfoState.EmptyResult(roadName)
+                    SearchRoadInfoState.EmptyResult()
                 } else SearchRoadInfoState.SearchResult(roadName, roadInfoResult[0])
             }
             .startWith(SearchRoadInfoState.Loading())
             .onErrorReturn { error ->
-                SearchRoadInfoState.Error(roadName, error)
+                if (error is HttpException)
+                    SearchRoadInfoState.HttpError(roadName, error)
+                else SearchRoadInfoState.Error(error)
             }
     }
 }

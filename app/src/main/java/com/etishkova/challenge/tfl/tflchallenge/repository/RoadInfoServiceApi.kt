@@ -10,7 +10,10 @@ import java.util.ArrayList
 interface RoadInfoServiceApi {
 
     @GET("/road/{roadName}")
-    fun fetchRoadInformation(@Path("roadName") roadName: String,
-                             @Query("appId") appId: String,
-                             @Query("appKey") appKey: String): Observable<ArrayList<RoadStatus>>
+    fun fetchRoadInformation(
+        @Path("roadName") roadName: String,
+        @Query("appId") appId: String,
+        @Query("appKey") appKey: String
+    ): Observable<ArrayList<RoadStatus>>
+
 }

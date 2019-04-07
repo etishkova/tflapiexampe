@@ -2,9 +2,11 @@
     <string name="app_name">TFL Road information</string>
     <string name="error">Error</string>
     <string name="search">Search</string>
-    <string name="nothing_found">No results returned</string>
+    <string name="nothing_found">Sorry, no results found</string>
     <string name="road_name">Road name: %1$s</string>
     <string name="road_status">Road status: %1$s</string>
     <string name="road_status_description">Road status description: %1$s</string>
     <string name="error_text">There was an error</string>
+    <string name="error_generic">The following error occurred: \n%1$s \nPlease try again later</string>
+    <string name="error_http">Doesn\'t look like %1$s is a valid road code</string>
 </resources>

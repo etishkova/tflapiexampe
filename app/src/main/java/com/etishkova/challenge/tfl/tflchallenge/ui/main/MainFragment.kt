@@ -17,13 +17,8 @@ import com.etishkova.challenge.tfl.tflchallenge.mosby.RoadInfoSearchView
 import com.etishkova.challenge.tfl.tflchallenge.repository.Interactor
 import com.hannesdorfmann.mosby3.mvi.MviFragment
 import com.jakewharton.rxbinding2.view.RxView
-import com.jakewharton.rxbinding2.widget.RxSearchView
 import io.reactivex.Observable
-import io.reactivex.Observable.create
-import io.reactivex.ObservableEmitter
-import io.reactivex.ObservableOnSubscribe
 import io.reactivex.subjects.PublishSubject
-import org.reactivestreams.Subscriber
 import java.util.concurrent.TimeUnit
 
 
@@ -41,6 +36,9 @@ class MainFragment : MviFragment<RoadInfoSearchView, RoadInfoSearchPresenter>(),
 
     @BindView(R.id.btnSearch)
     lateinit var btnSearchButton: Button
+
+    @BindView(R.id.tvNoResults)
+    lateinit var tvNoResults: TextView
 
     @BindView(R.id.tvDisplayName)
     lateinit var tvRoadName: TextView
@@ -91,6 +89,7 @@ class MainFragment : MviFragment<RoadInfoSearchView, RoadInfoSearchPresenter>(),
         tvRoadStatusDescription = view.findViewById(R.id.tvRoadStatusDescription)
         pbInProgress = view.findViewById(R.id.pbInProgress)
         tvError = view.findViewById(R.id.tvError)
+        tvNoResults = view.findViewById(R.id.tvNoResults)
         btnSearchButton.setOnClickListener { searchIntent() }
     }
 
@@ -105,6 +104,8 @@ class MainFragment : MviFragment<RoadInfoSearchView, RoadInfoSearchPresenter>(),
         when (viewRoadInfoState) {
             is SearchRoadInfoState.SearchNotStartedYet -> showSearchNotStarted()
             is SearchRoadInfoState.Loading -> showLoading()
+            is SearchRoadInfoState.EmptyResult -> showEmptyResult()
+            is SearchRoadInfoState.HttpError -> showHttpError(viewRoadInfoState.roadName, viewRoadInfoState.error)
             is SearchRoadInfoState.Error -> showError(viewRoadInfoState.error)
             is SearchRoadInfoState.SearchResult -> showResult(viewRoadInfoState.roadStatus)
         }
@@ -117,6 +118,7 @@ class MainFragment : MviFragment<RoadInfoSearchView, RoadInfoSearchPresenter>(),
         tvRoadStatus.visibility = View.GONE
         tvRoadStatusDescription.visibility = View.GONE
         tvError.visibility = View.GONE
+        tvNoResults.visibility = View.GONE
     }
 
     private fun showLoading() {
@@ -126,6 +128,18 @@ class MainFragment : MviFragment<RoadInfoSearchView, RoadInfoSearchPresenter>(),
         tvRoadStatus.visibility = View.GONE
         tvRoadStatusDescription.visibility = View.GONE
         tvError.visibility = View.GONE
+        tvNoResults.visibility = View.GONE
+    }
+
+    private fun showEmptyResult() {
+        TransitionManager.beginDelayedTransition(container)
+        pbInProgress.visibility = View.GONE
+        tvRoadName.visibility = View.GONE
+        tvRoadStatus.visibility = View.GONE
+        tvRoadStatusDescription.visibility = View.GONE
+        tvError.visibility = View.GONE
+        tvError.setText(R.string.error_text)
+        tvNoResults.visibility = View.VISIBLE
     }
 
     private fun showError(error: Throwable) {
@@ -135,7 +149,19 @@ class MainFragment : MviFragment<RoadInfoSearchView, RoadInfoSearchPresenter>(),
         tvRoadStatus.visibility = View.GONE
         tvRoadStatusDescription.visibility = View.GONE
         tvError.visibility = View.VISIBLE
-        tvError.setText(R.string.error_text)
+        tvNoResults.visibility = View.GONE
+        tvError.text = getString(R.string.error_generic, error.localizedMessage.toString())
+    }
+
+    private fun showHttpError(roadName: String, error: Throwable) {
+        TransitionManager.beginDelayedTransition(container)
+        pbInProgress.visibility = View.GONE
+        tvRoadName.visibility = View.GONE
+        tvRoadStatus.visibility = View.GONE
+        tvRoadStatusDescription.visibility = View.GONE
+        tvError.visibility = View.VISIBLE
+        tvNoResults.visibility = View.GONE
+        tvError.text = getString(R.string.error_http, roadName)
     }
 
     private fun showResult(roadInfoState: RoadStatus) {
@@ -145,6 +171,7 @@ class MainFragment : MviFragment<RoadInfoSearchView, RoadInfoSearchPresenter>(),
         tvRoadStatus.visibility = View.VISIBLE
         tvRoadStatusDescription.visibility = View.VISIBLE
         tvError.visibility = View.GONE
+        tvNoResults.visibility = View.GONE
         tvRoadName.text = getString(R.string.road_name, roadInfoState.displayName)
         tvRoadStatus.text = getString(R.string.road_status, roadInfoState.statusSeverity)
         tvRoadStatusDescription.text = getString(R.string.road_status_description, roadInfoState.statusSeverityDescription)

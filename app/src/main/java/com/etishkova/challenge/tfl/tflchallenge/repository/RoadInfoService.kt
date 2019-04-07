@@ -9,11 +9,15 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.ArrayList
+import java.util.concurrent.TimeUnit
 
 class RoadInfoService(
     private val interceptor: HttpLoggingInterceptor =
         HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY),
-    private val client: OkHttpClient = OkHttpClient.Builder().addInterceptor(interceptor).build(),
+    private val client: OkHttpClient = OkHttpClient.Builder()
+        .addInterceptor(interceptor)
+        .connectTimeout(30, TimeUnit.SECONDS)
+        .build(),
     private val api: RoadInfoServiceApi = Retrofit.Builder()
         .baseUrl(BASE_URL)
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
