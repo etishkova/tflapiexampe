@@ -21,9 +21,11 @@ class MainActivity : AppCompatActivity() {
         ButterKnife.setDebug(true)
         unbinder = ButterKnife.bind(this)
 
-        supportFragmentManager.beginTransaction()
-            .add(R.id.flContainer, MainFragment())
-            .commit()
+        if (savedInstanceState == null) {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.flContainer, MainFragment())
+                .commitNow()
+        }
     }
 
     override fun onDestroy() {
