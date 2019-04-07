@@ -16,5 +16,5 @@ In order to make sure API requests are valid you need to have a valid TFL `App I
 Replace values for `TFL_APP_ID` and `TFL_KEY` in `app/credentials.gradle` file with your own.
 
 ## **Testing the app**
-I only added a couple of tests just to show approach. The reason I didn't use TDD is that I was going through the tutorial and
-was learning to use the pattern at the same time, I believe it should be easier to use TDD of BDD when you fully understand how it works.
+I only added a couple of tests for Interactor just to show approach.
+To run tests you can either use `./gradlew test` or open `InteractorTest` class and run it from Android Studio
