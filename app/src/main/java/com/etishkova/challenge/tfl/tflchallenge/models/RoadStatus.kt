@@ -1,7 +1,9 @@
 package com.etishkova.challenge.tfl.tflchallenge.models
 
+import java.util.ArrayList
+
 data class RoadStatus(
-    val type: String?,
+    val type: ArrayList<String>?,
     val bounds: String = "",
     val displayName: String = "",
     val envelope: String = "",
@@ -16,7 +18,18 @@ data class RoadStatus(
     val relativeUri: String?,
     val timestampUtc: String?
 )
-
+/*
+data class RoadStatus(
+    val type: ArrayList<String>?,
+    val bounds: String,
+    val displayName: String,
+    val envelope: String,
+    val id: String,
+    val statusSeverity: String,
+    val statusSeverityDescription: String,
+    val url: String
+)
+*/
 /*data class RequestError(
     val type: String?,
     val exceptionType: String,

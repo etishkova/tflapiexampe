@@ -106,7 +106,6 @@ class MainFragment : MviFragment<RoadInfoSearchView, RoadInfoSearchPresenter>(),
             is SearchRoadInfoState.SearchNotStartedYet -> showSearchNotStarted()
             is SearchRoadInfoState.Loading -> showLoading()
             is SearchRoadInfoState.Error -> showError(viewRoadInfoState.error)
-            is SearchRoadInfoState.RequestError -> showRequestError(viewRoadInfoState.errorRoadStatus)
             is SearchRoadInfoState.SearchResult -> showResult(viewRoadInfoState.roadStatus)
         }
     }
@@ -139,16 +138,6 @@ class MainFragment : MviFragment<RoadInfoSearchView, RoadInfoSearchPresenter>(),
         tvError.setText(R.string.error_text)
     }
 
-    private fun showRequestError(errorRoadStatus: RoadStatus) {
-        TransitionManager.beginDelayedTransition(container)
-        pbInProgress.visibility = View.GONE
-        tvRoadName.visibility = View.GONE
-        tvRoadStatus.visibility = View.GONE
-        tvRoadStatusDescription.visibility = View.GONE
-        tvError.visibility = View.VISIBLE
-        tvError.text = errorRoadStatus.exceptionType
-    }
-
     private fun showResult(roadInfoState: RoadStatus) {
         TransitionManager.beginDelayedTransition(container)
         pbInProgress.visibility = View.GONE
@@ -156,6 +145,8 @@ class MainFragment : MviFragment<RoadInfoSearchView, RoadInfoSearchPresenter>(),
         tvRoadStatus.visibility = View.VISIBLE
         tvRoadStatusDescription.visibility = View.VISIBLE
         tvError.visibility = View.GONE
-        //TODO: show values
+        tvRoadName.text = getString(R.string.road_name, roadInfoState.displayName)
+        tvRoadStatus.text = getString(R.string.road_status, roadInfoState.statusSeverity)
+        tvRoadStatusDescription.text = getString(R.string.road_status_description, roadInfoState.statusSeverityDescription)
     }
 }

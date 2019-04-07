@@ -8,6 +8,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.ArrayList
 
 class RoadInfoService(
     private val interceptor: HttpLoggingInterceptor =
@@ -23,7 +24,7 @@ class RoadInfoService(
     private val tflAppId: String = BuildConfig.TFL_APP_ID
     private val tflKey: String = BuildConfig.TFL_KEY
 
-    fun fetchRoadInfo(roadName: String): Observable<RoadStatus> {
+    fun fetchRoadInfo(roadName: String): Observable<ArrayList<RoadStatus>> {
         return api.fetchRoadInformation(roadName, tflAppId, tflKey)
     }
 

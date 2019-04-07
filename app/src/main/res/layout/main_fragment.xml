@@ -27,7 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/default_margin"
-            android:hint="@string/display_name"
+            android:hint="@string/road_name"
             android:layout_marginStart="@dimen/default_margin"
             android:layout_below="@id/svQuerySearchView"
             android:visibility="gone" />

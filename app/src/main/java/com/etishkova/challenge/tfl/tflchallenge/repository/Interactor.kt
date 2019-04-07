@@ -9,15 +9,17 @@ class Interactor {
 
     fun searchRoadInfo(roadName: String): Observable<SearchRoadInfoState> {
         if (roadName.isEmpty())
-        return Observable.just(SearchRoadInfoState.SearchNotStartedYet())
+            return Observable.just(SearchRoadInfoState.SearchNotStartedYet())
 
         return roadInfoService.fetchRoadInfo(roadName)
             .map<SearchRoadInfoState> { roadInfoResult ->
-                if (roadInfoResult.httpStatusCode == 200) {
-                    SearchRoadInfoState.SearchResult(roadName, roadInfoResult)
-                } else SearchRoadInfoState.RequestError(roadName, roadInfoResult)
+                if (roadInfoResult.isEmpty()) {
+                    SearchRoadInfoState.EmptyResult(roadName)
+                } else SearchRoadInfoState.SearchResult(roadName, roadInfoResult[0])
             }
             .startWith(SearchRoadInfoState.Loading())
-            .onErrorReturn { error -> SearchRoadInfoState.Error(roadName, error) }
+            .onErrorReturn { error ->
+                SearchRoadInfoState.Error(roadName, error)
+            }
     }
 }
