@@ -16,7 +16,7 @@ class InteractorTest {
     }
 
     @Test
-    fun `Given empty road name is passed when search road info is called then Search not started state is returned`() {
+    fun `Given empty road name is passed when search road info is called then no errors and one event is returned`() {
         val emptyRoadName = ""
         val testResult = interactor.searchRoadInfo(emptyRoadName)
         val testObserver = TestObserver<SearchRoadInfoState>()
@@ -27,7 +27,7 @@ class InteractorTest {
     }
 
     @Test
-    fun `Given blank road name is passed when search road info is called then Search not started state is returned`() {
+    fun `Given blank road name is passed when search road info is called then no errors and one event is returned`() {
         val blankRoadName = "   "
         val testResult = interactor.searchRoadInfo(blankRoadName)
         val testObserver = TestObserver<SearchRoadInfoState>()
